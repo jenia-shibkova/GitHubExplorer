@@ -18,9 +18,10 @@ export class GithubApiError extends Error {
   }
 }
 
-async function githubFetch<T>(path: string): Promise<T> {
+async function githubFetch<T>(path: string, signal?: AbortSignal): Promise<T> {
   const response = await fetch(`${GITHUB_API_BASE}${path}`, {
     headers: { Accept: 'application/vnd.github+json' },
+    signal,
   });
 
   if (!response.ok) {
@@ -48,11 +49,10 @@ interface SearchRepositoriesParams {
   perPage?: number;
 }
 
-export function searchRepositories({
-  query,
-  page,
-  perPage = 30,
-}: SearchRepositoriesParams): Promise<GithubSearchResponse> {
+export function searchRepositories(
+  { query, page, perPage = 30 }: SearchRepositoriesParams,
+  signal?: AbortSignal,
+): Promise<GithubSearchResponse> {
   const params = new URLSearchParams({
     q: query,
     per_page: String(perPage),
@@ -60,12 +60,13 @@ export function searchRepositories({
   });
   return githubFetch<GithubSearchResponse>(
     `/search/repositories?${params.toString()}`,
+    signal,
   );
 }
 
-export function fetchRepository(fullName: string): Promise<GithubRepo> {
+export function fetchRepository(fullName: string, signal?: AbortSignal): Promise<GithubRepo> {
   // fullName is "owner/repo" — encode each segment separately so the slash
   // stays a path separator instead of becoming %2F.
   const path = fullName.split('/').map(encodeURIComponent).join('/');
-  return githubFetch<GithubRepo>(`/repos/${path}`);
+  return githubFetch<GithubRepo>(`/repos/${path}`, signal);
 }

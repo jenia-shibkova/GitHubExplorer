@@ -19,5 +19,11 @@ export const styles = StyleSheet.create({
   },
   loader: { marginTop: 60 },
   footerLoader: { paddingVertical: 20 },
+  footerError: {
+    paddingVertical: 20,
+    textAlign: 'center',
+    fontSize: 13,
+    fontWeight: '600',
+  },
   listContent: { paddingBottom: 24 },
 });

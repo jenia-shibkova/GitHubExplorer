@@ -28,6 +28,7 @@ export function SearchScreen({ navigation }: SearchScreenProps) {
     isError,
     error,
     isFetchingNextPage,
+    isFetchNextPageError,
     hasNextPage,
     fetchNextPage,
     refetch,
@@ -45,8 +46,15 @@ export function SearchScreen({ navigation }: SearchScreenProps) {
   );
 
   const handleEndReached = useCallback(() => {
-    if (hasNextPage && !isFetchingNextPage) fetchNextPage();
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+    // Once a next-page fetch has failed (most commonly the unauthenticated
+    // GitHub API's 10 req/min search limit — easy to hit while scrolling
+    // through several pages quickly), `hasNextPage` stays true since it's
+    // only recomputed from successfully fetched pages. Without this guard,
+    // every subsequent scroll-to-bottom would silently retry and fail again
+    // for as long as the rate limit window lasts; require an explicit tap
+    // on the footer's retry message instead.
+    if (hasNextPage && !isFetchingNextPage && !isFetchNextPageError) fetchNextPage();
+  }, [hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage]);
 
   const renderItem = useCallback<ListRenderItem<GithubRepo>>(
     ({ item }) => <RepoListItem repo={item} onPress={handlePressRepo} />,
@@ -107,6 +115,13 @@ export function SearchScreen({ navigation }: SearchScreenProps) {
                 color={colors.accent}
                 size="large"
               />
+            ) : isFetchNextPageError ? (
+              <Text
+                style={[styles.footerError, { color: colors.danger }]}
+                onPress={() => fetchNextPage()}
+              >
+                {t('search.loadMoreError')}
+              </Text>
             ) : null
           }
           contentContainerStyle={styles.listContent}

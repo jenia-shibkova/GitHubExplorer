@@ -28,9 +28,18 @@ const asyncStoragePersister = createAsyncStoragePersister({
  * details a user viewed are available with no network at all — this is
  * what powers the "offline support" bonus requirement. Call once at app
  * startup, before rendering.
+ *
+ * `persistQueryClient` returns `[unsubscribe, restorePromise]`. We deliberately
+ * never call `unsubscribe` — this app persists for its entire lifetime, there's
+ * no scenario where we'd want to stop. `restorePromise` resolves once the
+ * on-disk cache has actually finished loading into the QueryClient; the caller
+ * awaits it so the app doesn't render its first frame before that cache is
+ * live (see App.tsx) — the previous version returned void and fired this off
+ * without waiting, so that guarantee was only accidental (worked because MMKV
+ * happens to be fast, not because anything actually waited for it).
  */
-export function setupOfflinePersistence(): void {
-  persistQueryClient({
+export function setupOfflinePersistence(): Promise<void> {
+  const [, restorePromise] = persistQueryClient({
     queryClient,
     persister: asyncStoragePersister,
     maxAge: 1000 * 60 * 60 * 24,
@@ -40,4 +49,5 @@ export function setupOfflinePersistence(): void {
       shouldDehydrateQuery: query => query.state.status === 'success',
     },
   });
+  return restorePromise;
 }

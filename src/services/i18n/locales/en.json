@@ -18,7 +18,8 @@
     "error": {
       "title": "Something went wrong",
       "retry": "Tap to retry"
-    }
+    },
+    "loadMoreError": "Couldn't load more — tap to retry"
   },
   "repoList": {
     "openAccessibilityLabel": "Open {{fullName}}",

@@ -10,8 +10,12 @@ export function useRepoSearch(query: string) {
 
   const infiniteQuery = useInfiniteQuery({
     queryKey: ['repos', 'search', trimmedQuery] as const,
-    queryFn: ({ pageParam }) =>
-      searchRepositories({ query: trimmedQuery, page: pageParam, perPage: PER_PAGE }),
+    // `signal` cancels the in-flight fetch when the query is superseded — a
+    // new keystroke's query key, or the component unmounting — instead of
+    // letting a now-discarded request keep running to completion in the
+    // background.
+    queryFn: ({ pageParam, signal }) =>
+      searchRepositories({ query: trimmedQuery, page: pageParam, perPage: PER_PAGE }, signal),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       const fetchedSoFar = allPages.length * PER_PAGE;
