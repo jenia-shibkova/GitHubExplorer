@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking, Pressable, ScrollView, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import FastImage from '@d11/react-native-fast-image';
 import { useResolvedTheme } from '@/theme/colors';
 import { AvatarDefaultSvg } from '@/assets/avatar-default';
@@ -26,6 +27,7 @@ const AVATAR_LOAD_TIMEOUT_MS = 3000;
 
 export function RepoDetailScreen({ route }: RepoDetailScreenProps) {
   const { fullName, seedRepo } = route.params;
+  const { t } = useTranslation();
   const { colors } = useResolvedTheme();
   const { data: repo } = useRepoDetail(fullName, seedRepo);
   // Show the smaller size first — the same one `RepoListItem` requests, so
@@ -66,10 +68,10 @@ export function RepoDetailScreen({ route }: RepoDetailScreenProps) {
   if (!repo) return null;
 
   const stats: Array<[string, number]> = [
-    ['Stars', repo.stargazers_count],
-    ['Forks', repo.forks_count],
-    ['Watchers', repo.watchers_count],
-    ['Open issues', repo.open_issues_count],
+    [t('repoDetail.stats.stars'), repo.stargazers_count],
+    [t('repoDetail.stats.forks'), repo.forks_count],
+    [t('repoDetail.stats.watchers'), repo.watchers_count],
+    [t('repoDetail.stats.openIssues'), repo.open_issues_count],
   ];
 
   return (
@@ -90,7 +92,7 @@ export function RepoDetailScreen({ route }: RepoDetailScreenProps) {
               }}
               style={styles.avatar}
               resizeMode={FastImage.resizeMode.cover}
-              accessibilityLabel={`${repo.owner.login} avatar`}
+              accessibilityLabel={t('repoDetail.avatarAccessibilityLabel', { login: repo.owner.login })}
               onLoad={() => {
                 loadedRef.current = true;
               }}
@@ -116,7 +118,7 @@ export function RepoDetailScreen({ route }: RepoDetailScreenProps) {
         <View style={styles.headerText}>
           <Text style={[styles.name, { color: colors.text }]}>{repo.name}</Text>
           <Text style={[styles.owner, { color: colors.textMuted }]}>
-            by {repo.owner.login}
+            {t('repoDetail.ownerPrefix', { login: repo.owner.login })}
           </Text>
         </View>
       </View>
@@ -150,18 +152,18 @@ export function RepoDetailScreen({ route }: RepoDetailScreenProps) {
 
       <View style={styles.metaList}>
         {repo.language ? (
-          <MetaRow label="Language" value={repo.language} colors={colors} />
+          <MetaRow label={t('repoDetail.meta.language')} value={repo.language} colors={colors} />
         ) : null}
         {repo.license ? (
-          <MetaRow label="License" value={repo.license.name} colors={colors} />
+          <MetaRow label={t('repoDetail.meta.license')} value={repo.license.name} colors={colors} />
         ) : null}
         <MetaRow
-          label="Created"
+          label={t('repoDetail.meta.created')}
           value={formatRelativeDate(repo.created_at)}
           colors={colors}
         />
         <MetaRow
-          label="Last updated"
+          label={t('repoDetail.meta.lastUpdated')}
           value={formatRelativeDate(repo.updated_at)}
           colors={colors}
         />
@@ -172,7 +174,7 @@ export function RepoDetailScreen({ route }: RepoDetailScreenProps) {
         onPress={() => Linking.openURL(repo.html_url)}
         accessibilityRole="link"
       >
-        <Text style={styles.linkButtonText}>Open on GitHub</Text>
+        <Text style={styles.linkButtonText}>{t('repoDetail.openOnGithub')}</Text>
       </Pressable>
     </ScrollView>
   );

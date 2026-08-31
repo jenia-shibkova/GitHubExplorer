@@ -1405,7 +1405,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.25.0":
+"@babel/runtime@npm:^7.25.0, @babel/runtime@npm:^7.29.7":
   version: 7.29.7
   resolution: "@babel/runtime@npm:7.29.7"
   checksum: bc311855c6dbf5356030979584ca0f8b6cee39fe058175b02e85a73e246fc76ae30248b0d40e70c2652101faeb43279468ed2d086a670673eb9783c1fee1df2b
@@ -2863,9 +2863,11 @@ __metadata:
     "@types/react-test-renderer": ^19.1.0
     babel-plugin-module-resolver: ^5.0.3
     eslint: ^8.19.0
+    i18next: ^26.4.0
     jest: ^29.6.3
     prettier: 2.8.8
     react: 19.2.3
+    react-i18next: ^17.0.12
     react-native: 0.87.1
     react-native-mmkv: ^4.3.2
     react-native-nitro-modules: ^0.37.1
@@ -5297,6 +5299,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"html-parse-stringify@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "html-parse-stringify@npm:4.0.1"
+  checksum: 190d96883f6849098ca3fcbb76637f3a4f923d0ae902417d86db2ad2279b9ce19e4789945794ae2365a6a9e41da2dcf7c56b3f2dca67142487e51411eb1bf3ec
+  languageName: node
+  linkType: hard
+
 "http-errors@npm:^2.0.1, http-errors@npm:~2.0.1":
   version: 2.0.1
   resolution: "http-errors@npm:2.0.1"
@@ -5324,6 +5333,18 @@ __metadata:
   version: 2.1.0
   resolution: "human-signals@npm:2.1.0"
   checksum: b87fd89fce72391625271454e70f67fe405277415b48bcc0117ca73d31fa23a4241787afdc8d67f5a116cf37258c052f59ea82daffa72364d61351423848e3b8
+  languageName: node
+  linkType: hard
+
+"i18next@npm:^26.4.0":
+  version: 26.4.0
+  resolution: "i18next@npm:26.4.0"
+  peerDependencies:
+    typescript: ^5 || ^6 || ^7
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: ddfd626635f42845b07f1adb5c9c28f4906f5ff79abe353cc23fba96b91a67152bbb3bc95c02499e5712dbb99345a386ad62b764a6c6b55754c88b01b38166de
   languageName: node
   linkType: hard
 
@@ -7692,6 +7713,28 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-i18next@npm:^17.0.12":
+  version: 17.0.12
+  resolution: "react-i18next@npm:17.0.12"
+  dependencies:
+    "@babel/runtime": ^7.29.7
+    html-parse-stringify: ^4.0.1
+    use-sync-external-store: ^1.6.0
+  peerDependencies:
+    i18next: ">= 26.2.0"
+    react: ">= 16.8.0"
+    typescript: ^5 || ^6 || ^7
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+    typescript:
+      optional: true
+  checksum: ab9f5ee72a59fb3156571217de9706afd1c594f821b8823fec8e7197f4803340f6990ca1ee56a75d207fcc63ce69da75c57d2d87ac4fd19100c9aba7511f3d44
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -8980,7 +9023,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.5.0":
+"use-sync-external-store@npm:^1.5.0, use-sync-external-store@npm:^1.6.0":
   version: 1.6.0
   resolution: "use-sync-external-store@npm:1.6.0"
   peerDependencies:

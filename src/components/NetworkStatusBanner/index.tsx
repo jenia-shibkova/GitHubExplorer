@@ -1,6 +1,7 @@
 import NetInfo from '@react-native-community/netinfo';
 import { useEffect, useState } from 'react';
 import { AppState, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useResolvedTheme } from '@/theme/colors';
 import { styles } from './styles';
 
@@ -32,6 +33,7 @@ async function probeIsOnline(): Promise<boolean> {
 
 export function NetworkStatusBanner() {
   const [isOffline, setIsOffline] = useState(false);
+  const { t } = useTranslation();
   const { colors } = useResolvedTheme();
 
   useEffect(() => {
@@ -87,7 +89,7 @@ export function NetworkStatusBanner() {
 
   return (
     <Text style={[styles.banner, { backgroundColor: colors.danger }]}>
-      You're offline — showing cached results
+      {t('network.offlineBanner')}
     </Text>
   );
 }

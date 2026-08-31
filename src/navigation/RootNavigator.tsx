@@ -4,6 +4,7 @@ import {
   DarkTheme,
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useTranslation } from 'react-i18next';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SearchScreen } from '@/features/repos/screens/SearchScreen';
 import { RepoDetailScreen } from '@/features/repos/screens/RepoDetailScreen';
@@ -17,6 +18,7 @@ function renderThemeToggle() {
 }
 
 export function RootNavigator() {
+  const { t } = useTranslation();
   const { colors, isDark } = useResolvedTheme();
 
   return (
@@ -33,7 +35,7 @@ export function RootNavigator() {
         <Stack.Screen
           name="Search"
           component={SearchScreen}
-          options={{ title: 'Repositories', headerRight: renderThemeToggle }}
+          options={{ title: t('search.screenTitle'), headerRight: renderThemeToggle }}
         />
         <Stack.Screen
           name="RepoDetail"

@@ -1,3 +1,4 @@
+import i18n from '@/services/i18n';
 import type { GithubRepo, GithubSearchResponse } from './types';
 
 const GITHUB_API_BASE = 'https://api.github.com';
@@ -28,12 +29,12 @@ async function githubFetch<T>(path: string): Promise<T> {
     // instead of a generic "something went wrong".
     if (response.status === 403 || response.status === 429) {
       throw new GithubApiError(
-        "GitHub's public API rate limit was reached. Please wait a minute and try again.",
+        i18n.t('api.rateLimitError'),
         response.status,
       );
     }
     throw new GithubApiError(
-      `GitHub API error (${response.status})`,
+      i18n.t('api.genericError', { status: response.status }),
       response.status,
     );
   }

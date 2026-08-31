@@ -2,6 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { queryClient, setupOfflinePersistence } from '@/api/queryClient';
+import '@/services/i18n'; // side-effect: initializes i18next before anything renders
 import { RootNavigator } from '@/navigation/RootNavigator';
 import { useResolvedTheme } from '@/theme/colors';
 

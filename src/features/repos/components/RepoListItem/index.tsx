@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import FastImage from '@d11/react-native-fast-image';
 import type { GithubRepo } from '@/api/types';
 import { useResolvedTheme } from '@/theme/colors';
@@ -22,6 +23,7 @@ const MAX_AVATAR_RETRIES = 1;
 const AVATAR_LOAD_TIMEOUT_MS = 3000;
 
 function RepoListItemComponent({ repo, onPress }: Props) {
+  const { t } = useTranslation();
   const { colors } = useResolvedTheme();
   const [avatarFailed, setAvatarFailed] = useState(false);
   // A failure here is often just a dropped request under load — a fast
@@ -60,7 +62,7 @@ function RepoListItemComponent({ repo, onPress }: Props) {
         { borderBottomColor: colors.border, opacity: pressed ? 0.6 : 1 },
       ]}
       accessibilityRole="button"
-      accessibilityLabel={`Open ${repo.full_name}`}
+      accessibilityLabel={t('repoList.openAccessibilityLabel', { fullName: repo.full_name })}
     >
       {hasAvatarUrl && !avatarFailed ? (
         <FastImage
@@ -71,7 +73,7 @@ function RepoListItemComponent({ repo, onPress }: Props) {
           }}
           style={styles.avatar}
           resizeMode={FastImage.resizeMode.cover}
-          accessibilityLabel={`${repo.owner.login} avatar`}
+          accessibilityLabel={t('repoList.avatarAccessibilityLabel', { login: repo.owner.login })}
           onLoad={() => {
             loadedRef.current = true;
           }}
@@ -80,7 +82,7 @@ function RepoListItemComponent({ repo, onPress }: Props) {
       ) : (
         <View
           style={[styles.avatar, styles.avatarFallback, { backgroundColor: colors.fieldBackground }]}
-          accessibilityLabel={`${repo.owner.login} avatar`}
+          accessibilityLabel={t('repoList.avatarAccessibilityLabel', { login: repo.owner.login })}
         >
           <AvatarDefaultSvg width={22} height={22} color={colors.textMuted} />
         </View>

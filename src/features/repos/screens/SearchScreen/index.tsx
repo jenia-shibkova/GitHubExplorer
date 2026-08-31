@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import type { GithubRepo } from '@/api/types';
 import type { SearchScreenProps } from '@/navigation/types';
@@ -15,6 +16,7 @@ import { useResolvedTheme } from '@theme/colors';
 import { styles } from './styles';
 
 export function SearchScreen({ navigation }: SearchScreenProps) {
+  const { t } = useTranslation();
   const { colors } = useResolvedTheme();
   const [queryInput, setQueryInput] = useState('');
   const debouncedQuery = useDebouncedValue(queryInput, 400);
@@ -61,7 +63,10 @@ export function SearchScreen({ navigation }: SearchScreenProps) {
       <RepoSearchBar value={queryInput} onChangeText={setQueryInput} />
       {trimmedQuery.length > 0 && totalCount > 0 ? (
         <Text style={[styles.resultCount, { color: colors.textMuted }]}>
-          {totalCount.toLocaleString()} repositories
+          {t('search.resultCount', {
+            count: totalCount,
+            formattedCount: totalCount.toLocaleString(),
+          })}
         </Text>
       ) : null}
 
@@ -75,7 +80,7 @@ export function SearchScreen({ navigation }: SearchScreenProps) {
         // instead of yanking it away; NetworkStatusBanner already covers
         // telling the user they're offline.
         <ErrorState
-          message={error instanceof Error ? error.message : 'Please try again.'}
+          message={error instanceof Error ? error.message : t('search.genericErrorMessage')}
           onRetry={refetch}
         />
       ) : isLoading ? (

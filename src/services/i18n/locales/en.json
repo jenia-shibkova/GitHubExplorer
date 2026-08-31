@@ -1,0 +1,54 @@
+{
+  "search": {
+    "screenTitle": "Repositories",
+    "searchPlaceholder": "Search repositories (e.g. react-native)",
+    "searchAccessibilityLabel": "Search repositories",
+    "clearSearchAccessibilityLabel": "Clear search",
+    "resultCount_one": "{{formattedCount}} repository",
+    "resultCount_other": "{{formattedCount}} repositories",
+    "genericErrorMessage": "Please try again.",
+    "emptyQuery": {
+      "title": "Search GitHub repositories",
+      "subtitle": "Try a keyword like \"react-native\" or \"design-system\""
+    },
+    "noResults": {
+      "title": "No repositories found",
+      "subtitle": "Nothing matched \"{{query}}\" — try a different keyword."
+    },
+    "error": {
+      "title": "Something went wrong",
+      "retry": "Tap to retry"
+    }
+  },
+  "repoList": {
+    "openAccessibilityLabel": "Open {{fullName}}",
+    "avatarAccessibilityLabel": "{{login}} avatar"
+  },
+  "repoDetail": {
+    "ownerPrefix": "by {{login}}",
+    "openOnGithub": "Open on GitHub",
+    "avatarAccessibilityLabel": "{{login}} avatar",
+    "stats": {
+      "stars": "Stars",
+      "forks": "Forks",
+      "watchers": "Watchers",
+      "openIssues": "Open issues"
+    },
+    "meta": {
+      "language": "Language",
+      "license": "License",
+      "created": "Created",
+      "lastUpdated": "Last updated"
+    }
+  },
+  "network": {
+    "offlineBanner": "You're offline — showing cached results"
+  },
+  "theme": {
+    "toggleAccessibilityLabel": "Toggle dark mode"
+  },
+  "api": {
+    "rateLimitError": "GitHub's public API rate limit was reached. Please wait a minute and try again.",
+    "genericError": "GitHub API error ({{status}})"
+  }
+}
