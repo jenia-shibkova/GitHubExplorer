@@ -5,7 +5,10 @@
     "noImplicitOverride": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@components/*": ["./src/features/repos/components/*"]
+      "@components/*": ["./src/features/repos/components/*"],
+      "@hooks/*": ["./src/features/repos/hooks/*"],
+      "@theme/*": ["./src/theme/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
