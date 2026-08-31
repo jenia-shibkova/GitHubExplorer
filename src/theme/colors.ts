@@ -3,7 +3,8 @@ import { useThemeStore } from './themeStore';
 
 export interface Palette {
   background: string;
-  inputBackground: string;
+  fieldBackground: string;
+  surface: string;
   text: string;
   textMuted: string;
   border: string;
@@ -15,7 +16,8 @@ export interface Palette {
 export const palette: { light: Palette; dark: Palette } = {
   light: {
     background: '#F4F5EE',
-    inputBackground: '#E5E5D6',
+    fieldBackground: '#E5E5D6',
+    surface: '#F3F4F6',
     text: '#111827',
     textMuted: '#6B7280',
     border: '#E4E5DE',
@@ -25,7 +27,8 @@ export const palette: { light: Palette; dark: Palette } = {
   },
   dark: {
     background: '#0B0F17',
-    inputBackground: '#1C1C1D',
+    fieldBackground: '#1C1C24',
+    surface: '#1C1C1D',
     text: '#F3F4F6',
     textMuted: '#9CA3AF',
     border: '#242B38',

@@ -54,7 +54,15 @@ export function RepoDetailScreen({ route }: RepoDetailScreenProps) {
         </Text>
       ) : null}
 
-      <View style={[styles.statsGrid, { borderColor: colors.border }]}>
+      <View
+        style={[
+          styles.statsGrid,
+          {
+            borderColor: colors.border,
+            backgroundColor: colors.fieldBackground,
+          },
+        ]}
+      >
         {stats.map(([label, value]) => (
           <View key={label} style={styles.statCell}>
             <Text style={[styles.statValue, { color: colors.text }]}>

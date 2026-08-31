@@ -14,7 +14,7 @@ export function RepoSearchBar({ value, onChangeText }: Props) {
     <View
       style={[
         styles.searchBar,
-        { borderColor: colors.border, backgroundColor: colors.inputBackground },
+        { borderColor: colors.border, backgroundColor: colors.fieldBackground },
       ]}
     >
       <TextInput

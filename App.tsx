@@ -1,12 +1,13 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { StatusBar, useColorScheme } from 'react-native';
+import { StatusBar } from 'react-native';
 import { queryClient, setupOfflinePersistence } from '@/api/queryClient';
 import { RootNavigator } from '@/navigation/RootNavigator';
+import { useResolvedTheme } from '@/theme/colors';
 
 export default function App() {
   const [isPersistenceReady, setIsPersistenceReady] = useState(false);
-  const isDark = useColorScheme() === 'dark';
+  const { isDark } = useResolvedTheme();
 
   useEffect(() => {
     setupOfflinePersistence();

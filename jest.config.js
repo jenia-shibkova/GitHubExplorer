@@ -1,7 +1,7 @@
 module.exports = {
   preset: '@react-native/jest-preset',
   moduleNameMapper: {
-    '^@components/(.*)$': '<rootDir>/src/features/repos/components/$1',
+    '^@components/(.*)$': '<rootDir>/src/components/$1',
     '^@hooks/(.*)$': '<rootDir>/src/features/repos/hooks/$1',
     '^@theme/(.*)$': '<rootDir>/src/theme/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
