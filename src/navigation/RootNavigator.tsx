@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SearchScreen } from '@/features/repos/screens/SearchScreen';
+import { RepoDetailScreen } from '@/features/repos/screens/RepoDetailScreen';
 import { useResolvedTheme } from '@/theme/colors';
 import type { RootStackParamList } from './types';
 
@@ -20,12 +21,19 @@ export function RootNavigator() {
           headerStyle: { backgroundColor: colors.background },
           headerTintColor: colors.text,
           headerShadowVisible: false,
+          gestureEnabled: true,
+          fullScreenGestureEnabled: true,
         }}
       >
         <Stack.Screen
           name="Search"
           component={SearchScreen}
           options={{ title: 'Repositories' }}
+        />
+        <Stack.Screen
+          name="RepoDetail"
+          component={RepoDetailScreen}
+          options={({ route }) => ({ title: route.params.fullName })}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -33,6 +33,7 @@ function RepoListItemComponent({ repo, onPress }: Props) {
         }}
         style={styles.avatar}
         resizeMode={FastImage.resizeMode.cover}
+        accessibilityLabel={`${repo.owner.login} avatar`}
       />
       <View style={styles.content}>
         <Text style={[styles.name, { color: colors.text }]} numberOfLines={1}>

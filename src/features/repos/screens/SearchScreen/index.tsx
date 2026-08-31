@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import type { GithubRepo } from '@/api/types';
+import type { SearchScreenProps } from '@/navigation/types';
 import { RepoSearchBar } from '@components/RepoSearchBar';
 import { RepoListItem } from '@components/RepoListItem';
 import { EmptyQueryState } from '@components/RepoListStates/EmptyQueryState';
@@ -12,7 +13,7 @@ import { useRepoSearch } from '@hooks/useRepoSearch';
 import { useResolvedTheme } from '@theme/colors';
 import { styles } from './styles';
 
-export function SearchScreen() {
+export function SearchScreen({ navigation }: SearchScreenProps) {
   const { colors } = useResolvedTheme();
   const [queryInput, setQueryInput] = useState('');
   const debouncedQuery = useDebouncedValue(queryInput, 400);
@@ -30,7 +31,15 @@ export function SearchScreen() {
     isRefetching,
   } = useRepoSearch(debouncedQuery);
 
-  const handlePressRepo = useCallback(() => {}, []);
+  const handlePressRepo = useCallback(
+    (repo: GithubRepo) => {
+      navigation.navigate('RepoDetail', {
+        fullName: repo.full_name,
+        seedRepo: repo,
+      });
+    },
+    [navigation],
+  );
 
   const handleEndReached = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) fetchNextPage();
@@ -72,6 +81,7 @@ export function SearchScreen() {
           data={repos}
           keyExtractor={keyExtractor}
           renderItem={renderItem}
+          keyboardShouldPersistTaps="handled"
           onEndReached={handleEndReached}
           onEndReachedThreshold={0.5}
           refreshing={isRefetching}

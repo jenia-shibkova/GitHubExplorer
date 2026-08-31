@@ -63,5 +63,8 @@ export function searchRepositories({
 }
 
 export function fetchRepository(fullName: string): Promise<GithubRepo> {
-  return githubFetch<GithubRepo>(`/repos/${fullName}`);
+  // fullName is "owner/repo" — encode each segment separately so the slash
+  // stays a path separator instead of becoming %2F.
+  const path = fullName.split('/').map(encodeURIComponent).join('/');
+  return githubFetch<GithubRepo>(`/repos/${path}`);
 }
