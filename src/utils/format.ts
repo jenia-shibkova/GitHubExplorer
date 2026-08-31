@@ -10,6 +10,16 @@ function trimTrailingZero(value: number): string {
 }
 
 /**
+ * The avatar size `RepoListItem` requests — shared so `RepoDetailScreen` can
+ * fall back to this exact size (and therefore this exact cached URL) when
+ * its own larger avatar request fails, e.g. offline. Any repo the user has
+ * scrolled past in the list already has this size cached; keeping it a
+ * named export instead of two independently-hardcoded `44`s is what makes
+ * that guarantee actually hold instead of silently drifting apart.
+ */
+export const LIST_AVATAR_SIZE = 44;
+
+/**
  * GitHub's avatar CDN resizes on request via `?s=<px>` — asking for the
  * rendered size (×2 for retina) instead of the full-resolution original
  * avoids downloading/decoding an oversized image for a 40–60px thumbnail.

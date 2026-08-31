@@ -12,6 +12,10 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     marginRight: 12,
   },
+  avatarFallback: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   content: {
     flex: 1,
     justifyContent: 'center',

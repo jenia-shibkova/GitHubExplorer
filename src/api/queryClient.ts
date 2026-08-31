@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { QueryClient } from '@tanstack/react-query';
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { persistQueryClient } from '@tanstack/react-query-persist-client';
+import { mmkvStorage } from '@/storage/mmkvStorage';
 import { GithubApiError } from './github';
 
 export const queryClient = new QueryClient({
@@ -19,7 +19,7 @@ export const queryClient = new QueryClient({
 });
 
 const asyncStoragePersister = createAsyncStoragePersister({
-  storage: AsyncStorage,
+  storage: mmkvStorage,
   key: 'GITHUB_REPOS_EXPLORER_CACHE',
 });
 

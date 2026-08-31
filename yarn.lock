@@ -1920,18 +1920,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-async-storage/async-storage@npm:^3.1.1":
-  version: 3.1.1
-  resolution: "@react-native-async-storage/async-storage@npm:3.1.1"
-  dependencies:
-    idb: 8.0.3
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 4f2227cb7d7365bed1dc418404cb986aafcaefd7908671cc0f226fb7d264511b07c7d210699a997f7acda3c25f4ec23764f28ebf5e76cedd2438d5836fef9296
-  languageName: node
-  linkType: hard
-
 "@react-native-community/cli-clean@npm:20.2.0":
   version: 20.2.0
   resolution: "@react-native-community/cli-clean@npm:20.2.0"
@@ -2855,7 +2843,6 @@ __metadata:
     "@babel/preset-env": ^7.25.3
     "@babel/runtime": ^7.25.0
     "@d11/react-native-fast-image": ^8.13.0
-    "@react-native-async-storage/async-storage": ^3.1.1
     "@react-native-community/cli": 20.2.0
     "@react-native-community/cli-platform-android": 20.2.0
     "@react-native-community/cli-platform-ios": 20.2.0
@@ -2880,6 +2867,8 @@ __metadata:
     prettier: 2.8.8
     react: 19.2.3
     react-native: 0.87.1
+    react-native-mmkv: ^4.3.2
+    react-native-nitro-modules: ^0.37.1
     react-native-safe-area-context: ^5.5.2
     react-native-screens: ^4.27.0
     react-native-svg: ^15.15.5
@@ -5347,13 +5336,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"idb@npm:8.0.3":
-  version: 8.0.3
-  resolution: "idb@npm:8.0.3"
-  checksum: e0f160be2b9a3b031db25a3bd134b5187f1b51d7e2cdc85a0e5ec62b0f635a7e37847d4888c9d919e7de1e9d8646a9390ce42d249b6a0b30d538c651ab1c3852
-  languageName: node
-  linkType: hard
-
 "ieee754@npm:^1.1.13":
   version: 1.2.1
   resolution: "ieee754@npm:1.2.1"
@@ -7728,6 +7710,27 @@ __metadata:
   version: 19.2.8
   resolution: "react-is@npm:19.2.8"
   checksum: ec955b3b167cbe041a1f474063d15aa0c5a4d67a75b95e3e4090e9b964986a1fcf66370f3aa4deb34342c898e5d95da37d725d089c40e537598e0c3cc8bba00e
+  languageName: node
+  linkType: hard
+
+"react-native-mmkv@npm:^4.3.2":
+  version: 4.3.2
+  resolution: "react-native-mmkv@npm:4.3.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-nitro-modules: "*"
+  checksum: d77e4547a4564149cbc18b9b1502c73e65b8a8994df636b82e4b2d232adce2d2f3d8a85d75041087a1c2c77166a45a16463bb6500405d33847e933a81281cb77
+  languageName: node
+  linkType: hard
+
+"react-native-nitro-modules@npm:^0.37.1":
+  version: 0.37.1
+  resolution: "react-native-nitro-modules@npm:0.37.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: ef8a3fbf9b66bc6e5ec9db3aa2f4566600777a5d95e3f897e09e50b2fd33860a1bda4bfa54887709a6fc2ce2cc80a26d9cbb6e77f8c33aea9537c788d089638b
   languageName: node
   linkType: hard
 

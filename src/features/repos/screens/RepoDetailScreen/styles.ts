@@ -16,6 +16,18 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
     marginRight: 14,
   },
+  // Offscreen probe for the sharper avatar — never shown, just used to know
+  // when it's safe to swap the visible one without a network wait.
+  avatarPreloadProbe: {
+    position: 'absolute',
+    width: 1,
+    height: 1,
+    opacity: 0,
+  },
+  avatarFallback: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   headerText: {
     flex: 1,
   },

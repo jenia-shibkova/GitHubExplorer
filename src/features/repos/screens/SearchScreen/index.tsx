@@ -3,6 +3,7 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import type { GithubRepo } from '@/api/types';
 import type { SearchScreenProps } from '@/navigation/types';
+import { NetworkStatusBanner } from '@/components/NetworkStatusBanner';
 import { RepoSearchBar } from '@/features/repos/components/RepoSearchBar';
 import { RepoListItem } from '@/features/repos/components/RepoListItem';
 import { EmptyQueryState } from '@/features/repos/components/RepoListStates/EmptyQueryState';
@@ -56,6 +57,7 @@ export function SearchScreen({ navigation }: SearchScreenProps) {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <NetworkStatusBanner />
       <RepoSearchBar value={queryInput} onChangeText={setQueryInput} />
       {trimmedQuery.length > 0 && totalCount > 0 ? (
         <Text style={[styles.resultCount, { color: colors.textMuted }]}>
@@ -65,7 +67,13 @@ export function SearchScreen({ navigation }: SearchScreenProps) {
 
       {trimmedQuery.length === 0 ? (
         <EmptyQueryState />
-      ) : isError ? (
+      ) : isError && repos.length === 0 ? (
+        // Full-screen error only when we have nothing else to show. If a
+        // background refetch (pagination, pull-to-refresh) fails while
+        // repos from an earlier successful fetch are still around — most
+        // commonly from going offline mid-session — keep showing that list
+        // instead of yanking it away; NetworkStatusBanner already covers
+        // telling the user they're offline.
         <ErrorState
           message={error instanceof Error ? error.message : 'Please try again.'}
           onRetry={refetch}
