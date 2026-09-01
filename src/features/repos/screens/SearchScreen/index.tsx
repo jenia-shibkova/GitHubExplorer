@@ -16,7 +16,6 @@ import { RepoListItem } from '@/features/repos/components/RepoListItem';
 import { EmptyQueryState } from '@/features/repos/components/RepoListStates/EmptyQueryState';
 import { ErrorState } from '@/features/repos/components/RepoListStates/ErrorState';
 import { NoResultsState } from '@/features/repos/components/RepoListStates/NoResultsState';
-import { useDebouncedValue } from '@hooks/useDebouncedValue';
 import { useRepoSearch } from '@hooks/useRepoSearch';
 import { useResolvedTheme } from '@theme/colors';
 import { styles } from './styles';
@@ -24,8 +23,7 @@ import { styles } from './styles';
 export function SearchScreen({ navigation }: SearchScreenProps) {
   const { t } = useTranslation();
   const { colors } = useResolvedTheme();
-  const [queryInput, setQueryInput] = useState('');
-  const debouncedQuery = useDebouncedValue(queryInput, 400);
+  const [debouncedQuery, setDebouncedQuery] = useState('');
 
   const {
     repos,
@@ -76,7 +74,7 @@ export function SearchScreen({ navigation }: SearchScreenProps) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <NetworkStatusBanner />
-        <RepoSearchBar value={queryInput} onChangeText={setQueryInput} />
+        <RepoSearchBar onDebouncedChange={setDebouncedQuery} />
         {trimmedQuery.length > 0 && totalCount > 0 ? (
           <Text style={[styles.resultCount, { color: colors.textMuted }]}>
             {t('search.resultCount', {

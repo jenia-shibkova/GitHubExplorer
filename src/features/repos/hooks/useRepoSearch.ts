@@ -11,9 +11,12 @@ export function useRepoSearch(query: string) {
   const infiniteQuery = useInfiniteQuery({
     queryKey: ['repos', 'search', trimmedQuery] as const,
     // `signal` cancels the in-flight fetch when the query is superseded — a
-    // new keystroke's query key, or the component unmounting — instead of
-    // letting a now-discarded request keep running to completion in the
-    // background.
+    // new debounced search term (see RepoSearchBar), or the component
+    // unmounting — instead of letting a now-discarded request keep running
+    // to completion in the background. Debouncing already stops a fetch
+    // from firing per keystroke; this covers the case debouncing can't, a
+    // slow response for the previous term still in flight when the next
+    // one settles.
     queryFn: ({ pageParam, signal }) =>
       searchRepositories({ query: trimmedQuery, page: pageParam, perPage: PER_PAGE }, signal),
     initialPageParam: 1,
