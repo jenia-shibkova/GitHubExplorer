@@ -260,3 +260,7 @@ In the order I would work on them:
 5. **A simple loading placeholder for avatars** (a blurred preview or a
    plain-color skeleton) instead of an empty space that suddenly fills in.
    This would make loading feel smoother.
+
+## Android APK
+
+Download the APK here: https://drive.google.com/drive/folders/1r6MeH5Dk0MQNarE6OOIarGe1djoDQ65x?usp=drive_link
