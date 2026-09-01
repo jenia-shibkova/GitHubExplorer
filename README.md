@@ -264,3 +264,9 @@ In the order I would work on them:
 ## Android APK
 
 Download the APK here: https://drive.google.com/drive/folders/1r6MeH5Dk0MQNarE6OOIarGe1djoDQ65x?usp=drive_link
+
+By default a release APK bundles native libraries for every ABI
+(arm64-v8a, armeabi-v7a, x86, x86_64) in one file, even though a given
+device only ever uses one. Adding an ABI split to
+`android/app/build.gradle` brought the arm64-v8a build (the one most
+real devices need) from **83MB down to 29MB**.

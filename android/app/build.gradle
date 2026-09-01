@@ -72,7 +72,24 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
+/**
+ * Without this, a release APK bundles native .so libraries for every
+ * architecture (arm64-v8a, armeabi-v7a, x86, x86_64) in one file, even
+ * though a given device only ever uses one. Splitting per-ABI cuts a
+ * typical RN release APK to roughly a quarter of its universal size.
+ * `universalApk true` keeps a combined APK around too, for distributing
+ * to an unknown device without picking the right variant by hand.
+ */
 android {
+    splits {
+        abi {
+            reset()
+            enable true
+            universalApk true
+            include "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
+    }
+
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
