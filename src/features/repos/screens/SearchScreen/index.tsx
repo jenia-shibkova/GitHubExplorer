@@ -1,5 +1,11 @@
 import { useState, useCallback } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import type { GithubRepo } from '@/api/types';
@@ -53,7 +59,8 @@ export function SearchScreen({ navigation }: SearchScreenProps) {
     // every subsequent scroll-to-bottom would silently retry and fail again
     // for as long as the rate limit window lasts; require an explicit tap
     // on the footer's retry message instead.
-    if (hasNextPage && !isFetchingNextPage && !isFetchNextPageError) fetchNextPage();
+    if (hasNextPage && !isFetchingNextPage && !isFetchNextPageError)
+      fetchNextPage();
   }, [hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage]);
 
   const renderItem = useCallback<ListRenderItem<GithubRepo>>(
@@ -66,67 +73,74 @@ export function SearchScreen({ navigation }: SearchScreenProps) {
   const trimmedQuery = debouncedQuery.trim();
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <NetworkStatusBanner />
-      <RepoSearchBar value={queryInput} onChangeText={setQueryInput} />
-      {trimmedQuery.length > 0 && totalCount > 0 ? (
-        <Text style={[styles.resultCount, { color: colors.textMuted }]}>
-          {t('search.resultCount', {
-            count: totalCount,
-            formattedCount: totalCount.toLocaleString(),
-          })}
-        </Text>
-      ) : null}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <NetworkStatusBanner />
+        <RepoSearchBar value={queryInput} onChangeText={setQueryInput} />
+        {trimmedQuery.length > 0 && totalCount > 0 ? (
+          <Text style={[styles.resultCount, { color: colors.textMuted }]}>
+            {t('search.resultCount', {
+              count: totalCount,
+              formattedCount: totalCount.toLocaleString(),
+            })}
+          </Text>
+        ) : null}
 
-      {trimmedQuery.length === 0 ? (
-        <EmptyQueryState />
-      ) : isError && repos.length === 0 ? (
-        // Full-screen error only when we have nothing else to show. If a
-        // background refetch (pagination, pull-to-refresh) fails while
-        // repos from an earlier successful fetch are still around — most
-        // commonly from going offline mid-session — keep showing that list
-        // instead of yanking it away; NetworkStatusBanner already covers
-        // telling the user they're offline.
-        <ErrorState
-          message={error instanceof Error ? error.message : t('search.genericErrorMessage')}
-          onRetry={refetch}
-        />
-      ) : isLoading ? (
-        <ActivityIndicator
-          style={styles.loader}
-          color={colors.accent}
-          size="large"
-        />
-      ) : (
-        <FlashList
-          data={repos}
-          keyExtractor={keyExtractor}
-          renderItem={renderItem}
-          keyboardShouldPersistTaps="handled"
-          onEndReached={handleEndReached}
-          onEndReachedThreshold={0.5}
-          refreshing={isRefetching}
-          onRefresh={refetch}
-          ListEmptyComponent={<NoResultsState query={trimmedQuery} />}
-          ListFooterComponent={
-            isFetchingNextPage ? (
-              <ActivityIndicator
-                style={styles.footerLoader}
-                color={colors.accent}
-                size="large"
-              />
-            ) : isFetchNextPageError ? (
-              <Text
-                style={[styles.footerError, { color: colors.danger }]}
-                onPress={() => fetchNextPage()}
-              >
-                {t('search.loadMoreError')}
-              </Text>
-            ) : null
-          }
-          contentContainerStyle={styles.listContent}
-        />
-      )}
-    </View>
+        {trimmedQuery.length === 0 ? (
+          <EmptyQueryState />
+        ) : isError && repos.length === 0 ? (
+          // Full-screen error only when we have nothing else to show. If a
+          // background refetch (pagination, pull-to-refresh) fails while
+          // repos from an earlier successful fetch are still around — most
+          // commonly from going offline mid-session — keep showing that list
+          // instead of yanking it away; NetworkStatusBanner already covers
+          // telling the user they're offline.
+          <ErrorState
+            message={
+              error instanceof Error
+                ? error.message
+                : t('search.genericErrorMessage')
+            }
+            onRetry={refetch}
+          />
+        ) : isLoading ? (
+          <ActivityIndicator
+            style={styles.loader}
+            color={colors.accent}
+            size="large"
+          />
+        ) : (
+          <FlashList
+            data={repos}
+            keyExtractor={keyExtractor}
+            renderItem={renderItem}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag"
+            onEndReached={handleEndReached}
+            onEndReachedThreshold={0.5}
+            refreshing={isRefetching}
+            onRefresh={refetch}
+            ListEmptyComponent={<NoResultsState query={trimmedQuery} />}
+            ListFooterComponent={
+              isFetchingNextPage ? (
+                <ActivityIndicator
+                  style={styles.footerLoader}
+                  color={colors.accent}
+                  size="large"
+                />
+              ) : isFetchNextPageError ? (
+                <Text
+                  style={[styles.footerError, { color: colors.danger }]}
+                  onPress={() => fetchNextPage()}
+                >
+                  {t('search.loadMoreError')}
+                </Text>
+              ) : null
+            }
+            contentContainerStyle={styles.listContent}
+          />
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
